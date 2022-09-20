@@ -51,7 +51,8 @@ class AbstractUserSocialAuth(models.Model, DjangoUserMixin):
         try:
             logger.info("#### get social auth ####")
             logger.info(type(uid))
-            logger.info(provider, uid)
+            logger.info(provider)
+            logger.info(uid)
             return cls.objects.select_related('user').get(provider=provider,
                                                           uid=uid)
         except cls.DoesNotExist:
