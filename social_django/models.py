@@ -50,6 +50,8 @@ class AbstractUserSocialAuth(models.Model, DjangoUserMixin):
     def get_social_auth(cls, provider, uid):
         try:
             logger.info("#### get social auth ####")
+            logger.info(type(uid))
+            logger.info(provider, uid)
             return cls.objects.select_related('user').get(provider=provider,
                                                           uid=uid)
         except cls.DoesNotExist:
