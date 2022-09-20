@@ -1,3 +1,4 @@
+import logging
 from django.conf import settings
 from django.contrib.auth import login, REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
@@ -10,6 +11,7 @@ from social_core.actions import do_auth, do_complete, do_disconnect
 from .utils import psa
 
 
+logger = logging.getLogger(__name__)
 NAMESPACE = getattr(settings, setting_name('URL_NAMESPACE'), None) or 'social'
 
 # Calling `session.set_expiry(None)` results in a session lifetime equal to
@@ -28,6 +30,9 @@ def auth(request, backend):
 @psa('{0}:complete'.format(NAMESPACE))
 def complete(request, backend, *args, **kwargs):
     """Authentication complete view"""
+    logger.info("#### testing social auth ####")
+    logger.info(args)
+    logger.info(kwargs)
     return do_complete(request.backend, _do_login, request.user,
                        redirect_name=REDIRECT_FIELD_NAME, request=request,
                        *args, **kwargs)
