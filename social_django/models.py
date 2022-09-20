@@ -1,5 +1,6 @@
 """Django ORM models for Social Auth"""
 import six
+import logging
 
 from django.db import models
 from django.conf import settings
@@ -15,6 +16,7 @@ from .fields import JSONField
 from .managers import UserSocialAuthManager
 
 
+logger = logging.getLogger(__name__)
 USER_MODEL = getattr(settings, setting_name('USER_MODEL'), None) or \
              getattr(settings, 'AUTH_USER_MODEL', None) or \
              'auth.User'
@@ -47,6 +49,7 @@ class AbstractUserSocialAuth(models.Model, DjangoUserMixin):
     @classmethod
     def get_social_auth(cls, provider, uid):
         try:
+            logger.info("#### get social auth ####")
             return cls.objects.select_related('user').get(provider=provider,
                                                           uid=uid)
         except cls.DoesNotExist:
