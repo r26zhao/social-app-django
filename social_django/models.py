@@ -1,4 +1,8 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 """Django ORM models for Social Auth"""
+
 import six
 import logging
 
