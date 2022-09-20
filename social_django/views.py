@@ -1,4 +1,5 @@
 import logging
+import inspect
 from django.conf import settings
 from django.contrib.auth import login, REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
@@ -33,6 +34,7 @@ def complete(request, backend, *args, **kwargs):
     logger.info("#### testing social auth ####")
     logger.info(args)
     logger.info(kwargs)
+    logger.info(inspect.stack()[1][3])
     return do_complete(request.backend, _do_login, request.user,
                        redirect_name=REDIRECT_FIELD_NAME, request=request,
                        *args, **kwargs)
