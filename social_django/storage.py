@@ -1,5 +1,6 @@
 """Django ORM models for Social Auth"""
 import base64
+import logging
 import six
 import sys
 from django.db import transaction
@@ -8,6 +9,8 @@ from django.db.utils import IntegrityError
 from social_core.storage import UserMixin, AssociationMixin, NonceMixin, \
                                 CodeMixin, PartialMixin, BaseStorage
 
+
+logger = logging.getLogger(__name__)
 
 class DjangoUserMixin(UserMixin):
     """Social Auth association model"""
@@ -100,6 +103,10 @@ class DjangoUserMixin(UserMixin):
 
     @classmethod
     def get_social_auth(cls, provider, uid):
+        logger.info("#### get social auth ####")
+        logger.info(type(uid))
+        logger.info(provider)
+        logger.info(uid)
         if not isinstance(uid, six.string_types):
             uid = str(uid)
         try:
@@ -109,6 +116,10 @@ class DjangoUserMixin(UserMixin):
 
     @classmethod
     def get_social_auth_for_user(cls, user, provider=None, id=None):
+        logger.info("#### Social Mixin ####")
+        logger.info(type(id))
+        logger.info(provider)
+        logger.info(id)
         qs = cls.objects.filter(user=user)
 
         if provider:
