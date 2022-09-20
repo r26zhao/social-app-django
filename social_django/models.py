@@ -58,7 +58,6 @@ class AbstractUserSocialAuth(models.Model, DjangoUserMixin):
             logger.info(type(uid))
             logger.info(provider)
             logger.info(uid)
-            uid = u"npłud001"
             logger.info(inspect.stack()[1][3])
             return cls.objects.select_related('user').get(provider=provider,
                                                           uid=uid)
