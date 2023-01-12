@@ -19,6 +19,7 @@ from .storage import DjangoUserMixin, DjangoAssociationMixin, \
                      DjangoPartialMixin, BaseDjangoStorage
 from .fields import JSONField
 from .managers import UserSocialAuthManager
+from lms.djangoapps.certificates.api import get_certificates_for_user
 
 
 logger = logging.getLogger(__name__)
@@ -54,11 +55,13 @@ class AbstractUserSocialAuth(models.Model, DjangoUserMixin):
     @classmethod
     def get_social_auth(cls, provider, uid):
         try:
+            x = True
             logger.info("#### get social auth ####")
             logger.info(type(uid))
             logger.info(provider)
             logger.info(uid)
             logger.info(inspect.stack()[1][3])
+            get_certificates_for_user('Aaron')
             return cls.objects.select_related('user').get(provider=provider,
                                                           uid=uid)
         except cls.DoesNotExist:

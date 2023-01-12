@@ -10,7 +10,7 @@ from django.views.decorators.cache import never_cache
 from social_core.utils import setting_name
 from social_core.actions import do_auth, do_complete, do_disconnect
 from .utils import psa
-from lms.djangoapps.certificates.api import get_certificates_for_user
+from student.views import sitel_router
 
 
 logger = logging.getLogger(__name__)
@@ -32,16 +32,7 @@ def auth(request, backend):
 @psa('{0}:complete'.format(NAMESPACE))
 def complete(request, backend, *args, **kwargs):
     """Authentication complete view"""
-    get_certificates_for_user('aaron')
-    raise KeyError
-    logger.info("#### testing social auth ####")
-    logger.info(args)
-    logger.info(kwargs)
-    logger.info(inspect.stack()[1][3])
-    raise KeyError
-    return do_complete(request.backend, _do_login, request.user,
-                       redirect_name=REDIRECT_FIELD_NAME, request=request,
-                       *args, **kwargs)
+    return sitel_router(request)
 
 
 @never_cache
